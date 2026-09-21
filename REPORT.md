@@ -25,3 +25,17 @@ In Feature-2, the executable target (`bin/client`) depended directly on all thre
 **3. When you run `nm` on `client_static`, are symbols like `mystrlen` present? What does this tell you about static linking?**
 
 Yes — `mystrlen` and the other functions appear as defined (`T`) symbols directly inside `client_static`. This confirms that static linking copies the actual machine code of the library's functions into the final executable at build time, rather than just referencing them. That's why static executables are self-contained but larger than dynamically linked ones.
+
+## Feature-4 Report Questions
+
+**1. What is Position-Independent Code (-fPIC) and why is it required for shared libraries?**
+
+`-fPIC` compiles code so it can run correctly no matter where in memory it gets loaded, using relative addressing instead of fixed absolute addresses. This is required for shared libraries because a `.so` file can be loaded at different memory addresses in different programs (or even in the same program run multiple times), and the OS needs to be able to place it anywhere without breaking internal references.
+
+**2. Explain the file size difference between the static and dynamic clients.**
+
+`client_static` (16792 bytes) is larger than `client_dynamic` (16448 bytes) — a 344-byte difference. This is because the static build copies the actual compiled code of `libmyutils` directly into the executable, while the dynamic build only stores a reference to `libmyutils.so`, which is loaded separately at runtime. The difference is small here since the library only has a few small functions, but it would scale up significantly with a larger library.
+
+**3. What is LD_LIBRARY_PATH and why was it needed?**
+
+`LD_LIBRARY_PATH` is an environment variable that tells the dynamic loader additional directories to search for shared libraries at runtime. It was necessary because `libmyutils.so` isn't installed in a standard system library path (like `/usr/lib`), so without setting it, the loader couldn't find the library and the program failed with a "cannot open shared object file" error. This shows that the OS loader is responsible for resolving and loading shared library dependencies at program startup, not at compile time.
