@@ -35,3 +35,9 @@ obj/myfilefunctions_pic.o: src/myfilefunctions.c
 
 clean:
 	rm -f obj/*.o bin/client_static bin/client_dynamic lib/libmyutils.a lib/libmyutils.so
+
+install: all
+	sudo cp bin/client_static /usr/local/bin/client
+	sudo cp man/man3/mystrfunctions.3 /usr/local/share/man/man3/
+	sudo cp man/man3/myfilefunctions.3 /usr/local/share/man/man3/
+	sudo mandb
