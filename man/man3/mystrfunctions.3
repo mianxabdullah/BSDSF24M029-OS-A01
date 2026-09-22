@@ -1,0 +1,45 @@
+.TH MYSTRFUNCTIONS 3 "September 2026" "libmyutils" "Library Functions"
+.SH NAME
+mystrlen, mystrcpy, mystrncpy, mystrcat \- custom string utility functions
+.SH SYNOPSIS
+.B #include "mystrfunctions.h"
+.sp
+.BI "int mystrlen(const char *" s ");"
+.br
+.BI "int mystrcpy(char *" dest ", const char *" src ");"
+.br
+.BI "int mystrncpy(char *" dest ", const char *" src ", int " n ");"
+.br
+.BI "int mystrcat(char *" dest ", const char *" src ");"
+.SH DESCRIPTION
+These functions are custom implementations of common C string operations.
+.TP
+.B mystrlen
+Returns the length of the string
+.I s
+(excluding the null terminator).
+.TP
+.B mystrcpy
+Copies the string
+.I src
+into
+.I dest
+including the null terminator. Returns the number of characters copied.
+.TP
+.B mystrncpy
+Copies at most
+.I n
+characters from
+.I src
+into
+.I dest
+, null-terminating the result.
+.TP
+.B mystrcat
+Appends
+.I src
+to the end of
+.I dest
+. Returns the resulting length.
+.SH AUTHOR
+Abdullah Ayub <bsdsf24m029@pucit.edu.pk>
